@@ -1,10 +1,7 @@
 package com.amon.book_catalog.controllers;
 
-// Local libraries
 import com.amon.book_catalog.entities.Book;
 import com.amon.book_catalog.service.BookService;
-
-// Global libraries
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/books")
+@RequestMapping("/books")  // Changed from /api/books to /books for Thymeleaf routing
 public class BookController {
 
     @Autowired
@@ -65,7 +62,7 @@ public class BookController {
     }
 
     // Delete a book
-    @PostMapping("delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return "redirect:/books";

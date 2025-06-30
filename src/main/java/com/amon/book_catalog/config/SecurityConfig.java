@@ -28,8 +28,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // public login/register
-                        .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll() // public book access
+                        .requestMatchers(
+                                "/",                     // Landing page
+                                "/login",                // Login page
+                                "/register",             // Register page
+                                "/css/**",               // Static CSS
+                                "/js/**",                // Static JS
+                                "/images/**",            // Static images
+                                "/api/auth/**",          // Auth APIs
+                                "/api/books/**",         // API Book access (REST)
+                                "/books/**"              // UI Book views (Thymeleaf)
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

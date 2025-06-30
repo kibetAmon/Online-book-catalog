@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Book Catalog</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1 th:text="${pageTitle}">Welcome</h1>
+    <nav>
+        <a th:href="@{/login}">Login</a> |
+        <a th:href="@{/register}">Register</a> |
+        <a th:href="@{/books}">Browse Books</a>
+    </nav>
+</header>
+
+<main>
+    <p>This is your one-stop online book catalog. Search, browse, and manage your personal collection with ease.</p>
+</main>
+
+<footer>
+    <p>&copy; 2025 Amon Book Catalog</p>
+</footer>
+</body>
+</html>

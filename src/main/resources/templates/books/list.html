@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books | Book Catalog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>📚 Book Catalog</h1>
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/books/add}">Add Book</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="content-section">
+        <h2>All Books</h2>
+
+        <div th:if="${books.isEmpty()}">
+            <p>No books found in the catalog.</p>
+        </div>
+
+        <div th:unless="${books.isEmpty()}">
+            <table class="book-table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}">Sample Title</td>
+                    <td th:text="${book.author}">Sample Author</td>
+                    <td th:text="${book.year}">2025</td>
+                    <td>
+                        <a th:href="@{'/books/' + ${book.id}}" class="btn btn-view">View</a>
+                        <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-edit">Edit</a>
+                        <form th:action="@{'/books/delete/' + ${book.id}}" method="post" class="inline-form">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this book?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Book Catalog. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
