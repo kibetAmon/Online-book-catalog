@@ -29,12 +29,27 @@
             <div class="book-info">
                 <p><strong>Author:</strong> <span th:text="${book.author}">Author Name</span></p>
                 <p><strong>ISBN:</strong> <span th:text="${book.isbn}">1234567890</span></p>
-                <p><strong>Published Date:</strong> <span th:text="${#dates.format(book.publishedDate, 'yyyy-MM-dd')}">2024-01-01</span></p>
-                <p><strong>Added:</strong> <span th:text="${#dates.format(book.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-30</span></p>
+
+                <!-- Published Date (LocalDate) -->
+                <p>
+                    <strong>Published Date:</strong>
+                    <span th:text="${book.publishedDate != null ? #temporals.format(book.publishedDate, 'yyyy-MM-dd') : 'N/A'}">
+                        2024-01-01
+                    </span>
+                </p>
+
+                <!-- Created At (LocalDateTime) -->
+                <p>
+                    <strong>Added:</strong>
+                    <span th:text="${book.createdAt != null ? #temporals.format(book.createdAt, 'yyyy-MM-dd HH:mm') : 'N/A'}">
+                        2025-06-30 12:00
+                    </span>
+                </p>
 
                 <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-edit">Edit</a>
                 <form th:action="@{'/books/delete/' + ${book.id}}" method="post" class="inline-form">
-                    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                    <button type="submit" class="btn btn-delete"
+                            onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
                 </form>
             </div>
         </div>
