@@ -31,21 +31,29 @@
             <table class="book-table">
                 <thead>
                 <tr>
+                    <th>Cover</th>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>Year</th>
+                    <th>ISBN</th>
+                    <th>Published</th>
+                    <th>Created At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="book : ${books}">
+                    <td>
+                        <img th:src="${book.coverImageUrl}" alt="Cover" style="width: 60px; height: auto; border-radius: 4px;">
+                    </td>
                     <td th:text="${book.title}">Sample Title</td>
                     <td th:text="${book.author}">Sample Author</td>
-                    <td th:text="${book.year}">2025</td>
+                    <td th:text="${book.isbn}">1234567890</td>
+                    <td th:text="${#dates.format(book.publishedDate, 'yyyy-MM-dd')}">2024-01-01</td>
+                    <td th:text="${#dates.format(book.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 12:00</td>
                     <td>
-                        <a th:href="@{'/books/' + ${book.id}}" class="btn btn-view">View</a>
-                        <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-edit">Edit</a>
-                        <form th:action="@{'/books/delete/' + ${book.id}}" method="post" class="inline-form">
+                        <a th:href="@{'/api/books/' + ${book.id}}" class="btn btn-view">View</a>
+                        <a th:href="@{'/api/books/edit/' + ${book.id}}" class="btn btn-edit">Edit</a>
+                        <form th:action="@{'/api/books/delete/' + ${book.id}}" method="post" class="inline-form">
                             <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this book?');">Delete</button>
                         </form>
                     </td>

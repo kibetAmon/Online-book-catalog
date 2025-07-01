@@ -25,20 +25,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",                     // Landing page
-                                "/login",                // Login page
-                                "/register",             // Register page
-                                "/css/**",               // Static CSS
-                                "/js/**",                // Static JS
-                                "/images/**",            // Static images
-                                "/api/auth/**",          // Auth APIs
-                                "/api/books/**",         // API Book access (REST)
-                                "/books/**"              // UI Book views (Thymeleaf)
-                        ).permitAll()
+                        // ✅ Public UI Routes
+                        .requestMatchers("/", "/login", "/register").permitAll()
+                        .requestMatchers("/books/**", "/collections/**", "/collection-books/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/books/add").permitAll() // ✅ Fix for POST form
+
+                        // ✅ Static Resources
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+
+                        // ✅ Public API Routes
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/books/**").permitAll()
+                        .requestMatchers("/api/collections/**").permitAll()
+                        .requestMatchers("/api/collection-books/**").permitAll()
+
+                        // 🔐 Any other request requires authentication
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

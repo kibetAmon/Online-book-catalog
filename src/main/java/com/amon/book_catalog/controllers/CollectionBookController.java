@@ -19,9 +19,13 @@ public class CollectionBookController {
     @PostMapping("/add")
     public String addBookToCollection(@RequestParam Long collectionId, @RequestParam Long bookId) {
         collectionBookService.addBookToCollection(collectionId, bookId);
-        return "redirect:/collections/" + collectionId;
+        return "redirect:/books/collection/" + collectionId;
     }
 
     // Remove book from a collection
-
+    @PostMapping("/remove")
+    public String removeBookFromCollection(@RequestParam Long collectionId, @RequestParam Long bookId) {
+        collectionBookService.removeBookFromCollection(collectionId, bookId);
+        return "redirect:/books/collection/" + collectionId;
+    }
 }

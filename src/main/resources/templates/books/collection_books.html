@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Collection Books | Book Catalog</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/collection-books.css}">
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <h1>📚 Book Collection</h1>
+    <nav>
+      <a th:href="@{/}">Home</a>
+      <a th:href="@{/books}">All Books</a>
+      <a th:href="@{/logout}">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="content-section">
+    <h2>Books in This Collection</h2>
+
+    <div th:if="${books.isEmpty()}">
+      <p>No books in this collection yet.</p>
+    </div>
+
+    <div th:unless="${books.isEmpty()}">
+      <table class="book-table">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Added At</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+          <td th:text="${book.title}">Sample Title</td>
+          <td th:text="${book.author}">Sample Author</td>
+          <td th:text="${book.isbn}">1234567890</td>
+          <td th:text="${#dates.format(book.createdAt, 'dd MMM yyyy')}">Today</td>
+          <td>
+            <form th:action="@{/api/collection-books/remove}" method="post" class="inline-form">
+              <input type="hidden" name="collectionId" th:value="${collectionId}">
+              <input type="hidden" name="bookId" th:value="${book.id}">
+              <button type="submit" class="btn btn-delete">Remove</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Add a Book to This Collection</h3>
+    <form th:action="@{/api/collection-books/add}" method="post">
+      <input type="hidden" name="collectionId" th:value="${collectionId}">
+      <select name="bookId" required>
+        <option value="" disabled selected>Select a book</option>
+        <option th:each="book : ${availableBooks}" th:value="${book.id}" th:text="${book.title + ' by ' + book.author}">Sample</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Add Book</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Book Catalog. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

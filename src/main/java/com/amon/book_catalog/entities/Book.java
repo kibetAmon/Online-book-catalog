@@ -1,7 +1,7 @@
 package com.amon.book_catalog.entities;
 
 // Global libraries
-import java.sql.Date;
+import java.time.LocalDate;
 import java.sql.Timestamp;
 
 public class Book {
@@ -9,11 +9,10 @@ public class Book {
     private String title;
     private String author;
     private String isbn;
-    private Date publishedDate;
+    private LocalDate publishedDate;
     private String coverImageUrl;
     private Timestamp createdAt;
 
-    // Getters and Setters
     // Getter and Setter for id
     public Long getId() {
         return id;
@@ -51,11 +50,11 @@ public class Book {
     }
 
     // Getter and Setter for publishedDate
-    public Date getPublishedDate() {
+    public LocalDate getPublishedDate() {
         return publishedDate;
     }
 
-    public void setPublishedDate(Date publishedDate) {
+    public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
 

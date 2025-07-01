@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/books")  // Changed from /api/books to /books for Thymeleaf routing
+@RequestMapping("/books")
 public class BookController {
 
     @Autowired

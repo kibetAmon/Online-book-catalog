@@ -1,129 +1,170 @@
-/* Base styles */
-body {
+/* Base reset */
+* {
+    box-sizing: border-box;
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
     color: #333;
+    padding-bottom: 60px;
 }
 
-a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Container */
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-}
-
-/* Header */
-header {
-    background-color: #343a40;
-    color: white;
-    padding: 20px 0;
+header, footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
 }
 
 header h1 {
-    margin: 0;
-    padding-left: 20px;
-    font-size: 1.8em;
+    margin-bottom: 0.5rem;
 }
 
-nav {
-    margin-top: 10px;
-    padding-left: 20px;
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 nav a {
     margin-right: 15px;
-    color: #f8f9fa;
+    color: #fff;
+    text-decoration: none;
     font-weight: 500;
 }
 
 nav a:hover {
-    color: #ffc107;
+    text-decoration: underline;
 }
 
-/* Footer */
-footer {
-    background-color: #343a40;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 40px;
-}
-
-/* Sections */
 .content-section {
-    background-color: white;
-    padding: 30px;
+    margin-top: 2rem;
+    background: #fff;
+    padding: 2rem;
     border-radius: 8px;
-    margin-top: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Tables */
 .book-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 1.5rem;
 }
 
-.book-table th,
-.book-table td {
-    padding: 12px 15px;
-    border: 1px solid #dee2e6;
+.book-table th, .book-table td {
+    padding: 12px 16px;
     text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
 .book-table th {
-    background-color: #007bff;
-    color: white;
+    background-color: #f4f4f4;
+    font-weight: 600;
 }
 
-.book-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+.book-table img {
+    width: 60px;
+    height: auto;
+    border-radius: 4px;
 }
 
-/* Buttons */
 .btn {
     display: inline-block;
-    padding: 8px 14px;
-    margin: 4px 4px;
+    padding: 6px 12px;
+    margin: 0 2px;
     font-size: 14px;
-    border: none;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
     border-radius: 4px;
     cursor: pointer;
-    text-align: center;
+    transition: background-color 0.2s ease;
 }
 
 .btn-view {
-    background-color: #17a2b8;
+    background-color: #3498db;
     color: white;
+    border: none;
+}
+
+.btn-view:hover {
+    background-color: #2980b9;
 }
 
 .btn-edit {
-    background-color: #ffc107;
-    color: black;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+}
+
+.btn-edit:hover {
+    background-color: #e67e22;
 }
 
 .btn-delete {
-    background-color: #dc3545;
+    background-color: #e74c3c;
     color: white;
+    border: none;
 }
 
-.btn:hover {
-    opacity: 0.9;
+.btn-delete:hover {
+    background-color: #c0392b;
 }
 
-/* Inline form for delete button */
 .inline-form {
     display: inline;
+}
+
+footer p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Book detail */
+.book-detail {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 1.5rem;
+}
+
+.book-cover img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.book-info p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+
+/* form card to add book */
+.form-card {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-card input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
