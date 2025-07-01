@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Collection</title>
+    <link rel="stylesheet" th:href="@{/css/collections.css}">
 </head>
 <body>
+
+<header>
+    <div class="container">
+        <h1>Add New Collection</h1>
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/collections/user/1}">My Collections</a>
+            <a th:href="@{/books}">Browse Books</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="content-section">
+        <form th:action="@{/collections/add}" th:object="${collection}" method="post">
+            <label for="name">Collection Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Book Catalog. All rights reserved.</p>
+    </div>
+</footer>
 
 </body>
 </html>

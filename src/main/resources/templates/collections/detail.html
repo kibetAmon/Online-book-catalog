@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title th:text="${collection.name} + ' | Collection Details'">Collection Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/collections.css}">
 </head>
 <body>
-$END$
+
+<header>
+    <div class="container">
+        <h1>📁 Collection Details</h1>
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/books}">All Books</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="content-section">
+        <h2 th:text="${collection.name}">Collection Name</h2>
+
+        <p><strong>Collection ID:</strong> <span th:text="${collection.id}">1</span></p>
+        <p><strong>User ID:</strong> <span th:text="${collection.userId}">10</span></p>
+        <p><strong>Created At:</strong>
+            <span th:text="${collection.createdAt != null ? #dates.format(collection.createdAt, 'yyyy-MM-dd HH:mm') : 'N/A'}">
+        2025-07-01 10:00
+      </span>
+        </p>
+
+        <div class="actions">
+            <a th:href="@{'/collections/edit/' + ${collection.id}}" class="btn btn-edit">Edit</a>
+            <form th:action="@{'/collections/delete/' + ${collection.id}}" method="post" class="inline-form">
+                <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this collection?');">Delete</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Book Catalog. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>

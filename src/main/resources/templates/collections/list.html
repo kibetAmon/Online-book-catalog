@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>User Collections | Book Catalog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/collections.css}">
 </head>
 <body>
-$END$
+
+<header>
+    <div class="container">
+        <h1>📦 My Collections</h1>
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/books}">All Books</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="content-section">
+        <h2>Collections</h2>
+
+        <div th:if="${collections.isEmpty()}">
+            <p>You have no collections yet.</p>
+        </div>
+
+        <div th:unless="${collections.isEmpty()}">
+            <ul class="collection-list">
+                <li th:each="collection : ${collections}">
+                    <h3>
+                        <a th:href="@{'/collections/' + ${collection.id}}"
+                           th:text="${collection.name}">Collection Name</a>
+                    </h3>
+                    <p>Created:
+                        <span th:text="${#dates.format(collection.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-30</span>
+                    </p>
+                    <form th:action="@{'/collections/delete/' + ${collection.id}}" method="post" class="inline-form">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this collection?');">Delete</button>
+                    </form>
+                    <a th:href="@{'/collections/edit/' + ${collection.id}}" class="btn btn-edit">Edit</a>
+                </li>
+            </ul>
+        </div>
+
+        <a th:href="@{/collections/add}" class="btn btn-primary">+ Add New Collection</a>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Book Catalog. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>

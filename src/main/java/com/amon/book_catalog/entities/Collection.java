@@ -15,7 +15,7 @@ public class Collection {
         return id;
     }
 
-    public void setId() {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -23,7 +23,7 @@ public class Collection {
         return userId;
     }
 
-    public void setUserId() {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -31,7 +31,7 @@ public class Collection {
         return name;
     }
 
-    public void setName() {
+    public void setName(String name) {
         this.name = name;
     }
 

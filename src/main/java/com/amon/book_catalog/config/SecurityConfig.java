@@ -25,23 +25,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for development simplicity
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Public UI Routes
-                        .requestMatchers("/", "/login", "/register").permitAll()
-                        .requestMatchers("/books/**", "/collections/**", "/collection-books/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/books/add").permitAll() // ✅ Fix for POST form
 
-                        // ✅ Static Resources
+                        // ✅ Public UI Pages
+                        .requestMatchers("/", "/login", "/register").permitAll()
+
+                        // ✅ Public Book & Collection Pages
+                        .requestMatchers("/books/**").permitAll()
+                        .requestMatchers("/collections/**").permitAll()
+                        .requestMatchers("/collection-books/**").permitAll()
+
+                        // ✅ Form Submissions (POST)
+                        .requestMatchers(HttpMethod.POST, "/books/add").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/collections/add").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/collections/edit").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/collections/delete/**").permitAll()
+
+                        // ✅ Static resources
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
 
-                        // ✅ Public API Routes
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/books/**").permitAll()
-                        .requestMatchers("/api/collections/**").permitAll()
-                        .requestMatchers("/api/collection-books/**").permitAll()
+                        // ✅ Public API (if still using any endpoints under /api/**)
+                        .requestMatchers("/api/**").permitAll()
 
-                        // 🔐 Any other request requires authentication
+                        // 🔐 Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
