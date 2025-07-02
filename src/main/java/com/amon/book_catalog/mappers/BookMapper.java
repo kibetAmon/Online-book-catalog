@@ -60,7 +60,7 @@ public interface BookMapper {
     @Delete("DELETE FROM books WHERE id = #{id}")
     void delete(Long id);
 
-    // Get books by collection ID
+    // Get books in a specific collection
     @Select("""
         SELECT b.id, b.title, b.author, b.isbn, b.published_date, b.cover_image_url, b.created_at
         FROM books b
@@ -74,4 +74,20 @@ public interface BookMapper {
                     typeHandler = org.apache.ibatis.type.LocalDateTimeTypeHandler.class)
     })
     List<Book> findBooksByCollectionId(Long collectionId);
+
+    // ✅ Get books NOT in a specific collection
+    @Select("""
+        SELECT id, title, author, isbn, published_date, cover_image_url, created_at
+        FROM books
+        WHERE id NOT IN (
+            SELECT book_id FROM collection_books WHERE collection_id = #{collectionId}
+        )
+    """)
+    @Results({
+            @Result(property = "publishedDate", column = "published_date",
+                    typeHandler = org.apache.ibatis.type.LocalDateTypeHandler.class),
+            @Result(property = "createdAt", column = "created_at",
+                    typeHandler = org.apache.ibatis.type.LocalDateTimeTypeHandler.class)
+    })
+    List<Book> findBooksNotInCollection(Long collectionId);
 }

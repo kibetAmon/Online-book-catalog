@@ -37,10 +37,21 @@
                     <p>Created:
                         <span th:text="${#dates.format(collection.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-30</span>
                     </p>
-                    <form th:action="@{'/collections/delete/' + ${collection.id}}" method="post" class="inline-form">
-                        <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this collection?');">Delete</button>
-                    </form>
+
+                    <!-- 📘 View Books -->
+                    <a th:href="@{'/collection-books/' + ${collection.id} + '/books'}" class="btn btn-view">
+                        📘 View Books
+                    </a>
+
+                    <!-- 📝 Edit -->
                     <a th:href="@{'/collections/edit/' + ${collection.id}}" class="btn btn-edit">Edit</a>
+
+                    <!-- ❌ Delete -->
+                    <form th:action="@{'/collections/delete/' + ${collection.id}}" method="post" class="inline-form">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this collection?');">
+                            Delete
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>

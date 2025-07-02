@@ -1,7 +1,9 @@
 package com.amon.book_catalog.controllers;
 
 import com.amon.book_catalog.entities.Collection;
+import com.amon.book_catalog.service.BookService;
 import com.amon.book_catalog.service.CollectionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,10 @@ public class CollectionController {
     @Autowired
     private CollectionService collectionService;
 
-    // ✅ List all collections for a user
+    @Autowired
+    private BookService bookService; // ✅ Needed to show books in a collection
+
+    // ✅ 1. List all collections for a specific user
     @GetMapping("/user/{userId}")
     public String listCollectionsByUser(@PathVariable Long userId, Model model) {
         List<Collection> collections = collectionService.findByUserId(userId);
@@ -24,7 +29,7 @@ public class CollectionController {
         return "collections/list";
     }
 
-    // ✅ View a single collection by ID
+    // ✅ 2. View a single collection by ID (optional detail page)
     @GetMapping("/{id}")
     public String viewCollection(@PathVariable Long id, Model model) {
         Collection collection = collectionService.findById(id);
@@ -32,23 +37,22 @@ public class CollectionController {
         return "collections/detail";
     }
 
-    // ✅ Show form to add new collection
+    // ✅ 3. Show add collection form
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("collection", new Collection());
         return "collections/add";
     }
 
-    // ✅ Handle form submission to add a new collection
+    // ✅ 4. Handle create collection POST
     @PostMapping("/add")
     public String addCollection(@ModelAttribute Collection collection) {
-        // Development mode: hardcoded user ID
-        collection.setUserId(1L); // Replace with authenticated user's ID in production
+        collection.setUserId(1L); // Dev mode default user
         collectionService.addCollection(collection);
         return "redirect:/collections/user/" + collection.getUserId();
     }
 
-    // ✅ Show form to edit existing collection
+    // ✅ 5. Show edit collection form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Collection collection = collectionService.findById(id);
@@ -56,19 +60,35 @@ public class CollectionController {
         return "collections/edit";
     }
 
-    // ✅ Handle form submission to update a collection
+    // ✅ 6. Handle edit form submission
     @PostMapping("/edit")
     public String updateCollection(@ModelAttribute Collection collection) {
         collectionService.updateCollection(collection);
         return "redirect:/collections/user/" + collection.getUserId();
     }
 
-    // ✅ Handle request to delete a collection
+    // ✅ 7. Delete a collection
     @PostMapping("/delete/{id}")
     public String deleteCollection(@PathVariable Long id) {
         Collection collection = collectionService.findById(id);
         Long userId = collection.getUserId();
         collectionService.deleteCollection(id);
         return "redirect:/collections/user/" + userId;
+    }
+
+    // ✅ 8. View books in a specific collection (for collectionbook.html)
+    @GetMapping("/{id}/books")
+    public String viewBooksInCollection(@PathVariable Long id, Model model) {
+        Collection collection = collectionService.findById(id);
+        if (collection == null) {
+            return "redirect:/collections/user/1";
+        }
+
+        model.addAttribute("collectionId", id);
+        model.addAttribute("collectionName", collection.getName());
+        model.addAttribute("books", bookService.findBooksByCollectionId(id));              // Existing books
+        model.addAttribute("availableBooks", bookService.findBooksNotInCollection(id));    // Addable books
+
+        return "collections/collectionbook";
     }
 }

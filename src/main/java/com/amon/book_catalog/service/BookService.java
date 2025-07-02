@@ -13,4 +13,7 @@ public interface BookService {
     void updateBook(Book book);
     void deleteBook(Long id);
     List<Book> findBooksByCollectionId(Long collectionId);
+
+    // ✅ New: Find books not in a given collection
+    List<Book> findBooksNotInCollection(Long collectionId);
 }

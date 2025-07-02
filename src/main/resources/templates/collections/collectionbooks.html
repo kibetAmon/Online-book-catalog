@@ -44,9 +44,13 @@
           <td th:text="${book.title}">Sample Title</td>
           <td th:text="${book.author}">Sample Author</td>
           <td th:text="${book.isbn}">1234567890</td>
-          <td th:text="${#dates.format(book.createdAt, 'dd MMM yyyy')}">Today</td>
           <td>
-            <form th:action="@{/api/collection-books/remove}" method="post" class="inline-form">
+              <span th:if="${book.createdAt != null}"
+                    th:text="${#temporals.format(book.createdAt, 'dd MMM yyyy')}">Today</span>
+            <span th:unless="${book.createdAt != null}">N/A</span>
+          </td>
+          <td>
+            <form th:action="@{/collection-books/remove}" method="post" class="inline-form">
               <input type="hidden" name="collectionId" th:value="${collectionId}">
               <input type="hidden" name="bookId" th:value="${book.id}">
               <button type="submit" class="btn btn-delete">Remove</button>
@@ -58,11 +62,13 @@
     </div>
 
     <h3>Add a Book to This Collection</h3>
-    <form th:action="@{/api/collection-books/add}" method="post">
+    <form th:action="@{/collection-books/add}" method="post">
       <input type="hidden" name="collectionId" th:value="${collectionId}">
       <select name="bookId" required>
         <option value="" disabled selected>Select a book</option>
-        <option th:each="book : ${availableBooks}" th:value="${book.id}" th:text="${book.title + ' by ' + book.author}">Sample</option>
+        <option th:each="book : ${availableBooks}"
+                th:value="${book.id}"
+                th:text="${book.title + ' by ' + book.author}">Book Option</option>
       </select>
       <button type="submit" class="btn btn-primary">Add Book</button>
     </form>

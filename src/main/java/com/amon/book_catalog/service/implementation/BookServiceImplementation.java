@@ -1,5 +1,3 @@
-// A java class that implements Book Service
-
 package com.amon.book_catalog.service.implementation;
 
 // Local libraries
@@ -19,39 +17,39 @@ public class BookServiceImplementation implements BookService {
     @Autowired
     private BookMapper bookMapper;
 
-    // Fetch all the books
     @Override
-    public List<Book> findAllBooks(){
+    public List<Book> findAllBooks() {
         return bookMapper.findAll();
     }
 
-    // Fetch books by their id
     @Override
-    public Book findBookById(Long id){
+    public Book findBookById(Long id) {
         return bookMapper.findById(id);
     }
 
-    // Add a book
     @Override
-    public void addBook(Book book){
+    public void addBook(Book book) {
         bookMapper.insert(book);
     }
 
-    // Update a book
     @Override
-    public void updateBook(Book book){
+    public void updateBook(Book book) {
         bookMapper.update(book);
     }
 
-    // Delete a book
     @Override
     public void deleteBook(Long id) {
         bookMapper.delete(id);
     }
 
-    // Find books by collection id
     @Override
     public List<Book> findBooksByCollectionId(Long collectionId) {
         return bookMapper.findBooksByCollectionId(collectionId);
+    }
+
+    // ✅ Implementation for finding books NOT in a specific collection
+    @Override
+    public List<Book> findBooksNotInCollection(Long collectionId) {
+        return bookMapper.findBooksNotInCollection(collectionId);
     }
 }
