@@ -48,6 +48,8 @@ nav a:hover {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+
+/* book table */
 .book-table {
     width: 100%;
     border-collapse: collapse;
@@ -71,6 +73,8 @@ nav a:hover {
     border-radius: 4px;
 }
 
+
+/* buttons */
 .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -123,6 +127,7 @@ footer p {
     margin-top: 1rem;
     font-size: 0.9rem;
 }
+
 
 /* Book detail */
 .book-detail {
